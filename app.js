@@ -1,8 +1,10 @@
+
 const express = require("express");
 const bodyParser = require("body-parser");
 const { v4: uuidv4 } = require("uuid");
 
 const app = express();
+
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -27,7 +29,8 @@ app.post("/create", (req, res) => {
   const newPost = {
     id: uuidv4(),
     username: req.body.username,
-    content: req.body.content
+    content: req.body.content,
+    user: req.body.user
   };
   posts.unshift(newPost);
   res.redirect("/");
@@ -57,7 +60,7 @@ app.post("/edit/:id", (req, res) => {
 });
 
 const PORT = process.env.PORT || 3000;
-
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
